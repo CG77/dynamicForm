@@ -1,6 +1,6 @@
 {
-    "name": "job/offersbundle",
-    "description": "Job Offers Bundle",
+    "name": "novactive/formgenerator",
+    "description": "form generator Bundle",
     "license": "MIT",
     "authors": [
         {
@@ -11,7 +11,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url":  "https://github.com/CG77/JobOffers.git"
+            "url":  "https://github.com/CG77/dynamicForm.git"
         }
     ],    
     "require": {
@@ -22,9 +22,9 @@
     },
     "minimum-stability": "dev",
     "autoload": {
-        "psr-0": {"Job\\OffersBundle": ""}
+        "psr-0": {"Novactive\\EzPublishFormGeneratorBundle": ""}
     },
-    "target-dir": "Job/OffersBundle",
+    "target-dir": "Novactive/EzPublishFormGeneratorBundle",
     "extra" : {
         "branch-alias" : {
             "dev-master" : "v1.0"
