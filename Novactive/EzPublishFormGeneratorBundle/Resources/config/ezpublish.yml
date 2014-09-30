@@ -1,0 +1,19 @@
+parameters:
+    novactive_ezformgenerator.field_type.form.class: Novactive\EzPublishFormGeneratorBundle\Core\FieldType\Form\Type
+    novactive_ezformgenerator.field_type.form.converter.class: Novactive\EzPublishFormGeneratorBundle\Core\Persistence\Legacy\Content\FieldValue\Converter\FormData
+
+services:
+    # Form datatype
+
+    novactive_ezformgenerator.field_type.form:
+        class: %novactive_ezformgenerator.field_type.form.class%
+        parent: ezpublish.fieldType.eztext
+        tags:
+            - {name: ezpublish.fieldType, alias: form}
+
+
+    novactive_ezformgenerator.field_type.form.converter:
+        class: %novactive_ezformgenerator.field_type.form.converter.class%
+        parent: ezpublish.fieldType.ezstring.converter
+        tags:
+            - {name: ezpublish.storageEngine.legacy.converter, alias: form, lazy: true, callback: "::create"}

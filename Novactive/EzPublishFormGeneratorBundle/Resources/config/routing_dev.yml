@@ -1,0 +1,9 @@
+# accessible uniquement en dev
+novactive_formgenerator_view:
+  path:   /form/view/{collectionId}
+  defaults:  { _controller: NovactiveEzPublishFormGeneratorBundle:FormView:showCollection }
+
+novactive_formgenerator_zipcode:
+    path:   /form/get_commune
+    defaults:  { _controller: NovactiveEzPublishFormGeneratorBundle:FormCollector:getCommune }
+

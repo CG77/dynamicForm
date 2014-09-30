@@ -1,0 +1,24 @@
+.singleSelectGroup.nestedGroup  .field input[type=text] , .singleSelectGroup.nestedGroup  input[type=date], .singleSelectGroup.nestedGroup  input.date, .singleSelectGroup.nestedGroup  input[type=email], .singleSelectGroup.nestedGroup  input[type=number], .singleSelectGroup.nestedGroup  input[type=password], .singleSelectGroup.nestedGroup  input[type=tel], .singleSelectGroup.nestedGroup  select[multiple], .singleSelectGroup.nestedGroup  input[type=url], .singleSelectGroup.nestedGroup  textarea  {
+    background: #F2F1F1;
+    border: 1px solid transparent;
+    margin: .833em 0 .167em;
+    padding: .583em 1.5em;
+    border-radius: 2em;
+}
+
+.formUnit .error {
+    height: auto;
+}
+
+span.form_error {
+    height: 16px;
+    font: .917em/16px Arial, Helvetica, sans-serif;
+    color: #FF0033;
+    padding: 0 4px 0 6px;
+    z-index: 3;
+    position: relative;
+    top: -1px;
+}
+.flash-notice{
+    clear:both;
+}

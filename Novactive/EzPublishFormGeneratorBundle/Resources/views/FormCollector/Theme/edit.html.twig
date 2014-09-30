@@ -1,0 +1,284 @@
+{% extends "::form_div_layout.html.twig" %}
+{% block form_label %}
+    {% spaceless %}
+        {% if label is not sameas(false) %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+            {% if required %}
+                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+            {% endif %}
+            {% if label is empty %}
+                {% set label = name | humanize %}
+            {% endif %}
+            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label | trans({}, translation_domain) | raw }}
+            {% if  not radio_label is defined and required %}<span class="reqNote"> *</span>{% endif %}
+            </label>
+            {% if form.vars.attr['illustration'] is defined and form.vars.attr['illustration'] is not null  %}
+                {{ render( controller( "NovactiveEzPublishFormGeneratorBundle:FormCollector:displayIllustration" ,
+                    { 'contentId' : form.vars.attr['illustration']  }) )
+                }}
+            {% endif %}
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_label %}
+
+{% block text_collector_widget %}
+    {% spaceless %}
+        {{ block('simple_field_widget') }}
+    {% endspaceless %}
+{% endblock %}
+
+{% block integer_collector_widget %}
+    {% spaceless %}
+        {{ block('simple_field_widget') }}
+    {% endspaceless %}
+{% endblock %}
+
+{% block textarea_collector_widget %}
+    {% spaceless %}
+        {{ block('simple_field_widget') }}
+    {% endspaceless %}
+{% endblock %}
+
+{% block hidden_collector_widget %}
+    {% spaceless %}
+        {{ form_widget(form.value) }}
+    {% endspaceless %}
+{% endblock %}
+
+
+{% block file_collector_widget %}
+    {% spaceless %}
+        <div class="field">
+            {{ form_label(form.value) }}
+            <div class="form_error">{{ form_errors(form.value) }}</div>
+            {% if description is defined and description is not empty %}
+                <button type="button" class="btn btnInfo" data-toggle="tooltip" data-original-title="{{ description }}">
+                    info
+                </button>
+            {% endif %}
+            {{ form_widget(form.value, {'attr': {'data-allowed-extensions': nova_ezform_allowed_file_extensions() | join('|')}}) }}
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block simple_field_widget %}
+    <div class="field">
+        {{ form_label(form.value) }}
+        <div class="form_error">{{ form_errors(form.value) }}</div>
+        {% if description is defined and description is not empty %}
+            <button type="button" class="btn btnInfo" data-toggle="tooltip" data-original-title="{{ description }}">
+                info
+            </button>
+        {% endif %}
+        {{ form_widget(form.value) }}
+    </div>
+{% endblock simple_field_widget %}
+
+
+{% block selection_collector_widget %}
+    {% spaceless %}
+        <div class="field {{ parent_class }}">
+            {{ form_label(form.selection) }}
+            <div class="form_error">{{ form_errors(form.selection) }}</div>
+            {% if description is defined and description is not empty %}
+                <button type="button" class="btn btnInfo" data-toggle="tooltip" data-original-title="{{ description }}">
+                    info
+                </button>
+            {% endif %}
+            {{ form_widget(form.selection, {"targets": targets, "subAttributes": form_widget(form.subAttributes)}) }}
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block scale_collector_widget %}
+    {% spaceless %}
+        <div class="field">
+            {{ form_label(form.value) }}
+            <div class="form_error">{{ form_errors(form.value) }}</div>
+            {% if description is defined and description is not empty %}
+                <button type="button" class="btn btnInfo" data-toggle="tooltip" data-original-title="{{ description }}">
+                    info
+                </button>
+            {% endif %}
+            {{ form_widget(form.value, {"attr": {"class": "range iRange" }}) }}
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block date_collector_widget %}
+    {% spaceless %}
+        <div class="field">
+            {{ form_label(form.value) }}
+            <div class="form_error">{{ form_errors(form.value) }}</div>
+            {% if description is defined and description is not empty %}
+                <button type="button" class="btn btnInfo" data-toggle="tooltip" data-original-title="{{ description }}">
+                    info
+                </button>
+            {% endif %}
+            {{ form_widget(form.value, {"attr": {"class": "datepicker" }}) }}
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block subattributes_collector_widget %}
+    {% if parent_selection_type != "checkbox" %}<div class="tabContent">{% endif %}
+        {% for child in form %}
+            {{ form_widget(child) }}
+        {% endfor %}
+    {% if parent_selection_type != "checkbox" %}</div>{% endif %}
+{% endblock subattributes_collector_widget %}
+
+{% block subattributes_panel_collector_widget %}
+    {% set class = "tabPanel" %}
+    {% if parent_selection_type == "checkbox" %}
+        {% set class = "collapse collapsePanel" %}
+    {% endif %}
+    <div class="{{ class }}" id="{{ panel_id }}">
+        {% for child in form %}
+            {{ form_widget(child, {"embed": true}) }}
+        {% endfor %}
+    </div>
+{% endblock subattributes_panel_collector_widget %}
+
+{% block choice_widget %}
+    {% spaceless %}
+        {% if expanded %}
+            {{ block('choice_widget_expanded') }}
+        {% else %}
+            {{ block('choice_widget_collapsed') }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock choice_widget %}
+
+{% block choice_widget_expanded %}
+{% spaceless %}
+{% if not multiple %}
+<div class="radioTabWrap">
+{% endif %}
+<ul {#{% if not multiple %}class="inputLine"{% endif %}#}>
+    {% for child in form %}
+    <li>
+        {% set params = {} %}
+        {% set value = child.vars.value %}
+        {% if targets[value] is defined %}
+        {% set params = {"attr": {"data-target": "#" ~ targets[value] }} %}
+        {% endif %}
+        {{ form_widget(child, params) }}
+        {{ form_label(child, null, {"radio_label": true}) }}
+    </li>
+    {% endfor %}
+</ul>
+{% if subAttributes is defined %}
+    {{ subAttributes | raw }}
+{% endif %}
+{% if not multiple %}
+</div>
+{% endif %}
+{% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block choice_widget_collapsed %}
+    {% spaceless %}
+        {% if required and empty_value is none and not empty_value_in_choices and not multiple %}
+            {% set required = false %}
+        {% endif %}
+        <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+            {% if empty_value is not none %}
+                <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
+            {% endif %}
+            {% if preferred_choices|length > 0 %}
+                {% set options = preferred_choices %}
+                {{ block('choice_widget_options') }}
+                {% if choices|length > 0 and separator is not none %}
+                    <option disabled="disabled">{{ separator }}</option>
+                {% endif %}
+            {% endif %}
+            {% set options = choices %}
+            {{ block('choice_widget_options') }}
+        </select>
+        {% if subAttributes is defined %}
+            {{ subAttributes | raw }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock choice_widget_collapsed %}
+
+{% block choice_widget_options %}
+    {% spaceless %}
+        {% for group_label, choice in options %}
+            {% if choice is iterable %}
+                <optgroup label="{{ group_label|trans({}, translation_domain) }}">
+                    {% set options = choice %}
+                    {{ block('choice_widget_options') }}
+                </optgroup>
+            {% else %}
+                {% set target = "" %}
+                {% if targets is defined and targets[choice.value] is defined %}
+                    {% set target = targets[choice.value] %}
+                {% endif %}
+                <option {% if target is not empty %}data-target="#{{ target }}"{% endif %}
+                        value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice.label|trans({}, translation_domain) }}</option>
+            {% endif %}
+        {% endfor %}
+    {% endspaceless %}
+{% endblock choice_widget_options %}
+
+{% block checkbox_widget %}
+    {% spaceless %}
+        <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+    {% endspaceless %}
+{% endblock checkbox_widget %}
+
+{% block radio_widget %}
+    {% spaceless %}
+        <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+    {% endspaceless %}
+{% endblock radio_widget %}
+
+{% block grid_collector_widget %}
+    {{ form_widget(form.grid) }}
+    <div class="form_error">{{ form_errors(form.grid) }}</div>
+{% endblock grid_collector_widget %}
+
+{% block grid_collector_definition_widget %}
+    <div class="field inputGrid required">
+        <p class="fieldTitle">{{ form_label(form) }}</p>
+        <div class="rwdTable">
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    {% for label in column %}
+                        <th scope="col">{{ label }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for label in row %}
+                    <tr>
+                        {% set x = loop.index0 %}
+                        <th scope="row">{{ label }}</th>
+                        {% for label in column %}
+                            {% set y = loop.index0 %}
+                            {% set formElement = y ~ ":" ~ x %}
+                            {% if form[formElement] is defined %}
+                                <td>
+                                    {{ form_widget(form[formElement]) }}
+                                </td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock grid_collector_definition_widget %}
+
+{% block grid_tuple_collector_widget %}
+    {{ form_widget(form.value) }}
+    <div class="form_error">{{ form_errors(form.value) }}</div>
+{% endblock %}
+
+
+
+

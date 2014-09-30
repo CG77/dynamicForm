@@ -1,0 +1,58 @@
+{% extends "NovactiveEzPublishFormGeneratorBundle:FormCollector:layout.html.twig" %}
+{% form_theme form _self %}
+
+{% block form_collector_builder_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block form_collector_builder_widget %}
+    {% for child in form %}
+        {{ form_widget(child, {'attr': {'data-page': loop.index }}) }}
+    {% endfor %}
+{% endblock %}
+
+{% block form_collector_page_widget %}
+    <fieldset class="fieldsetWidth page" data-page="{{ attr['data-page'] }}">
+        <legend class="setTitle">{{ title }}</legend>
+        <div id="flash_errors">
+            {% for flashMessage in app.session.flashbag.get('form.error') %}
+                <input type="hidden" value="{{ flashMessage }}" id="{{ loop.index }}"/>
+            {% endfor %}
+        </div>
+        {% for child in form %}
+            {% if child.vars['is_collector'] is defined and child.vars['is_collector'] == false %}
+                {% form_theme child "NovactiveEzPublishFormGeneratorBundle:FormCollector:Theme/view.html.twig"  %}
+            {% else %}
+                {% form_theme child "NovactiveEzPublishFormGeneratorBundle:FormCollector:Theme/edit.html.twig"  %}
+            {% endif %}
+            {{ form_widget(child) }}
+        {% endfor %}
+        {% if form.parent.captcha is defined and form.parent.captcha.vars['attr']['countPages'] == attr['data-page']  %}
+            {{ form_label((form.parent.captcha)) }}
+            {{ form_widget((form.parent.captcha)) }}
+            {% for error in form.parent.captcha.vars.errors %}
+                <span class="error">{{error.getMessage|trans }}</span>
+            {% endfor %}
+        {% endif %}
+    </fieldset>
+{% endblock %}
+
+{% block pagination_top %}
+    {% if pageCount > 1 %}
+    <span>Page <strong class="current_page">1</strong> sur {{ pageCount }}</span>
+    {% endif %}
+{% endblock %}
+
+{% block pagination_bottom %}
+    {% if pageCount > 1 %}
+    <a href="#" class="previous pager" title="Page précédente">‹</a>
+    <span>Page <strong class="current_page">1</strong> sur {{ pageCount }}</span>
+    <a href="#" class="next pager" title="Page suivante">›</a>
+    {% endif %}
+{% endblock pagination_bottom %}
+
+
+{% block content %}
+    <input type="hidden" value="{{ page }}" id="last_page" />
+    {{ form_widget((form)) }}
+{% endblock content %}

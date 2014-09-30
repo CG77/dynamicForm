@@ -1,0 +1,41 @@
+{% extends "NovactiveEzPublishFormGeneratorBundle:FormView/AttributeType:default.html.twig" %}
+
+{% block content %}
+    {% set borderStyle = "1px solid black" %}
+    <table style="border:1px solid black;" cellpadding="0">
+        <thead>
+        <tr>
+            <th style="border-bottom:{{ borderStyle }};"></th>
+            {% for column in attribute['data_text']['column'] %}
+                <th align="center" style="border-bottom:{{ borderStyle }}; border-left: {{ borderStyle }};">
+                    {{ column['name'] }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for x,row in attribute['data_text']['row'] %}
+            <tr>
+                <td align="left" style="border-bottom:{{ borderStyle }};">
+                    <strong>{{ row['name'] }}</strong>
+                </td>
+                {% for y,default in row['defaults'] %}
+                    <td align="center" style="border-bottom:{{ borderStyle }}; border-left: {{ borderStyle }};">
+                        {% set type = default['type'] %}
+                        {% set key = y ~ ":" ~ x %}
+                        {% set answer = attribute['answers'] %}
+                        {% if answer[key] is defined and answer[key] is not empty %}
+                            {% if type == "radio" or type == "checkbox" %}
+                                {% if answer[key]['value'] %}
+                                    ✓
+                                {% endif %}
+                            {% else %}
+                                {{ answer[key]['value'] }}
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

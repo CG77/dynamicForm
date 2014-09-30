@@ -1,0 +1,24 @@
+{% extends "NovactiveEzPublishFormGeneratorBundle:FormGenerator:layout.html.twig" %}
+
+{% block content %}
+<div class="nova_ezformgenerator">
+    <fieldset class="page_block" id="container_{{ page.id }}">
+        <legend class="page">
+            <input type="text" class="page_name" id="{{ page.id }}"/>
+            <span id="span-{{ page.id }}">{{ page.dataText }}</span>
+            <a class="page_rename" data-pageid="{{ page.id }}">Renommer</a>
+        </legend>
+        <a class="delete_page" data-pageid="{{ page.id }}">X</a>
+
+        <div id="attribute_content_{{ page.id }}"></div>
+
+        <div class="add-attribute">
+            {% include "NovactiveEzPublishFormGeneratorBundle:FormGenerator:showAttributeList.html.twig" with {
+            "attribute": "attribute",
+            "id" : page.id,
+            "attribute_types": attributes_type
+            } %}
+        </div>
+    </fieldset>
+</div>
+{% endblock content %}

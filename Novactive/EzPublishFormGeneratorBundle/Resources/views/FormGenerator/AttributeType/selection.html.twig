@@ -1,0 +1,27 @@
+{% if no_fieldset is not defined %}
+<fieldset class="parent">
+    <legend class="attribute">
+        <span>Zone de sélection </span>
+        <input type="button" value="{{ "Supprimer" | trans }}"
+               class="{% if attr['data-sub-attribute'] is defined and attr['data-sub-attribute'] is not empty %}delete_sub_attribute{% else %}delete_attribute{% endif %}" />
+    </legend>
+{% endif %}
+
+    {{ form_widget(form) }}
+
+    {% set aId = form.illustration_object_id.vars.id|split('_')  %}
+    {% set isHidden = 0 %}
+    {% if form.vars.value is not null and form.vars.value.illustrationObjectId is not null   %}
+        {% set isHidden = 1 %}
+        {{ render( controller( "NovactiveEzPublishFormGeneratorBundle:FormGenerator:renderIllustration" ,{ 'contentId' : form.vars.value.illustrationObjectId, 'attributeId' : aId.2  }) ) }}
+    {% endif %}
+    {% if no_fieldset is not defined %}
+    <input type="button" class="imageCreate {{ aId.2 }} button" {% if isHidden %}style="display:none"{% endif %} value="Gérer l'illustration"/>
+    <span class="label_illustration"></span>
+    <div class="clear"></div>
+    <input type="button" class="button_answer" value="Ajouter une réponse"/>
+    <div class="clear"></div>
+</fieldset>
+{% endif %}
+
+

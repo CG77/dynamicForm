@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="SelectionValue" table="TBL_selection_value">
+    <indexes>
+      <index name="FormAttributeID_idx" columns="FORM_ATTRIBUTE_ID"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="value" type="string" column="value" length="45" nullable="true"/>
+    <field name="placement" type="integer" column="placement" nullable="true"/>
+    <field name="key" type="string" column="key" length="45" nullable="true"/>
+    <field name="subAttributeId" type="integer" column="SUB_ATTRIBUTE_ID" nullable="true"/>
+    <field name="created" type="integer" column="created" nullable="true"/>
+    <field name="modified" type="integer" column="modified" nullable="true"/>
+    <many-to-one field="formAttribute" target-entity="TblAttribute">
+      <join-columns>
+        <join-column name="FORM_ATTRIBUTE_ID" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

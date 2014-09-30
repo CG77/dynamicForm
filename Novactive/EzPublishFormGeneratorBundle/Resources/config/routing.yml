@@ -1,0 +1,3 @@
+novactive_formgenerator_viewembed:
+  path:   /form/viewembed/{locationId}/{viewType}
+  defaults:  { _controller: NovactiveEzPublishFormGeneratorBundle:FormCollector:viewLocation }

@@ -1,0 +1,12 @@
+{% if no_fieldset is not defined %}
+<fieldset class="parent">
+    <legend class="attribute">
+        <span>Ligne de texte / Champ caché</span>
+        <input type="button" value="{{ "Supprimer" | trans }}"
+               class="{% if attr['data-sub-attribute'] is defined and attr['data-sub-attribute'] is not empty %}delete_sub_attribute{% else %}delete_attribute{% endif %}" />
+    </legend>
+    {% endif %}
+    {{ form_widget(form) }}
+    {% if no_fieldset is not defined %}
+</fieldset>
+{% endif %}

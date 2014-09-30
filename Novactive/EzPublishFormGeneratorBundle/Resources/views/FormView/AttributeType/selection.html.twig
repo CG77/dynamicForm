@@ -1,0 +1,47 @@
+{% extends "NovactiveEzPublishFormGeneratorBundle:FormView/AttributeType:default.html.twig" %}
+
+{% block content %}
+    {% set selectType = "" %}
+    {% if attribute['constraints']['select_type'] is defined %}
+        {% set selectType = attribute['constraints']['select_type'] %}
+    {% endif %}
+    {% if selectType == 'select' or selectType == 'radio' %}
+        {% set answer = attribute['answers'] | first %}
+        {% if answer %}
+            {% set value = answer['value'] %}
+            {% set key = answer['key'] %}
+            <div class="answer" style="padding-left: 15px;">
+                {{ value }}
+                {% if attribute['selection_values'][key] is defined %}
+                    {% set selection = attribute['selection_values'][key] %}
+                    {% if selection['sub_attributes'] is defined %}
+                        {% for subAttribute in selection['sub_attributes'] %}
+                            <div class="sub-attribute" style="padding-left: 15px;">
+                                {{ subAttribute | nova_ezform_render_attribute }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endif %}
+    {% else %}
+        {% set answers = attribute['answers'] %}
+        {% for answer in answers %}
+            {% set value = answer['value'] %}
+            {% set key = answer['key'] %}
+            <div class="answer" style="padding-left: 15px;">
+                {{ value }}
+                {% if attribute['selection_values'][key] is defined %}
+                    {% set selection = attribute['selection_values'][key] %}
+                    {% if selection['sub_attributes'] is defined %}
+                        {% for subAttribute in selection['sub_attributes'] %}
+                            <div class="sub-attribute" style="padding-left: 15px;">
+                                {{ subAttribute | nova_ezform_render_attribute }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock content %}

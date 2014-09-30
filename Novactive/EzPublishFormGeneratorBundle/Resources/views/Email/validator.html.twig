@@ -1,0 +1,8 @@
+<html>
+<head></head>
+<body>
+<h2>Formulaire : {{ title }}</h2>
+{{ render(controller("NovactiveEzPublishFormGeneratorBundle:FormView:showCollection", {"collectionId": collection.id})) | raw }}
+</body>
+</html>
+

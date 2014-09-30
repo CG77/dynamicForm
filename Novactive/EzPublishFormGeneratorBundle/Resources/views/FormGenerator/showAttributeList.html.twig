@@ -1,0 +1,7 @@
+<select id="add_{{ attribute }}_{{ id }}" class="select_list">
+    <option value="0">Ajouter une question</option>
+    {% for type,lib in attribute_types %}
+        <option value="{{ type }}">{{ lib }}</option>
+    {% endfor %}
+</select>
+<input type="button" value="+" class="add_{{ attribute }}" data-id="{{ id }}">

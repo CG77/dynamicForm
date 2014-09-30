@@ -1,0 +1,10 @@
+<fieldset>
+    <legend>{{ page['label'] }}</legend>
+    <div class="attributes">
+        {% for attribute in page['attributes'] %}
+            <div class="attribute">
+                {{ attribute | nova_ezform_render_attribute }}
+            </div>
+        {% endfor %}
+    </div>
+</fieldset>

@@ -1,0 +1,12 @@
+parameters:
+    nova_ezformgenerator.attribute_type: [text, email, datetime, selection, integer, textarea, grid, scale, file, hidden]
+    nova_ezformgenerator.allowed_extensions: [pdf, doc, docx, rtf, odt, jpg, jpeg, png, gif, bmp, xls, xlsx, ppt, pptx, zip]
+    nova_ezformgenerator.upload_dir: %kernel.root_dir%/../web/uploads/form
+    nova_ezformgenerator.web_dir: uploads/form
+    nova_ezformgenerator.legacy_dir: %kernel.root_dir%/../ezpublish_legacy
+    nova_ezformgenerator.pdfformfiller_jar: %kernel.root_dir%/../vendor/pdfformfiller/pdfformfiller.jar
+    nova_ezformgenerator.pdfformfiller_font: %kernel.root_dir%/../vendor/pdfformfiller/DejaVuSansCondensed.ttf
+    nova_ezformgenerator.pdfformfiller_csv: %kernel.root_dir%/../vendor/pdfformfiller/formulaire_mds.csv
+
+    nova_ezformgenerator.default.link_success: 63584
+    nova_ezformgenerator.default.error_link: 63575

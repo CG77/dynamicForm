@@ -1,0 +1,4 @@
+{% if not ez_is_field_empty(content,'name') %}
+    <input class="imageCreate {{ attributeId }} button" type="button" value="Gérer l'illustration" image-content-id="{{ content.id }}"/>
+    <span class="label_illustration">{{ ez_content_name(content,"name") }}</span>
+{% endif %}

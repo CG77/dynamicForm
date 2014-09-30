@@ -1,0 +1,45 @@
+{% extends "::form_div_layout.html.twig" %}
+
+{% block selection_collector_widget %}
+    {{ block('subtitle') }}
+{% endblock %}
+
+{% block integer_collector_widget %}
+    {{ block('subtitle') }}
+{% endblock %}
+
+{% block textarea_collector_widget %}
+    {{ block('subtitle') }}
+{% endblock %}
+
+{% block scale_collector_widget %}
+    {{ block('subtitle') }}
+{% endblock %}
+
+{% block grid_collector_widget %}
+    {{ block('subtitle') }}
+{% endblock %}
+
+{% block text_collector_widget %}
+    {{ block('subtitle') }}
+{% endblock %}
+
+{% block email_collector_widget %}
+    {{ block('subtitle') }}
+{% endblock %}
+
+{% block datetime_collector_widget %}
+    {{ block('subtitle') }}
+{% endblock %}
+
+{% block hidden_collector_widget %}
+    {# le type hidden est obligatoirement collecteur d'informations #}
+{% endblock %}
+
+{% block subtitle %}
+    <div class="field"></div>
+    <legend class="setTitle">{{ label }}</legend>
+    {% if description is defined and description %}
+        <p>{{ description }}</p>
+    {% endif %}
+{% endblock %}

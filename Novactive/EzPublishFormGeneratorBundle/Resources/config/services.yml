@@ -1,0 +1,31 @@
+services:
+    novactive_ezformgenerator.type.form_collector_builder:
+        class: Novactive\EzPublishFormGeneratorBundle\Form\Type\Collector\FormCollectorBuilderType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: form_collector_builder }
+
+    novactive_ezformgenerator.type.form.file:
+        class: Novactive\EzPublishFormGeneratorBundle\Form\Type\Collector\FileType
+        arguments: [@novactive_ezformgenerator.store.file]
+        tags:
+            - { name: form.type, alias: file_collector }
+
+    novactive_ezformgenerator.generator_controller:
+        class: Novactive\EzPublishFormGeneratorBundle\Controller\FormGeneratorController
+        calls:
+            - [setContainer, [@service_container]]
+
+    novactive_ezformgenerator.manager.form:
+        class: Novactive\EzPublishFormGeneratorBundle\Manager\FormManager
+        arguments: [@doctrine.orm.entity_manager]
+
+    novactive_ezformgenerator.twig.form_extension:
+        class: Novactive\EzPublishFormGeneratorBundle\Twig\FormExtension
+        arguments: ["%nova_ezformgenerator.attribute_type%", @novactive_ezformgenerator.store.file]
+        tags:
+            - { name: twig.extension }
+
+    novactive_ezformgenerator.store.file:
+        class: Novactive\EzPublishFormGeneratorBundle\Storage\FileService
+        arguments: ["%nova_ezformgenerator.allowed_extensions%", "%nova_ezformgenerator.upload_dir%", "%nova_ezformgenerator.web_dir%", "%nova_ezformgenerator.pdfformfiller_jar%", "%nova_ezformgenerator.pdfformfiller_font%", "%nova_ezformgenerator.legacy_dir%", "%nova_ezformgenerator.pdfformfiller_csv%"]

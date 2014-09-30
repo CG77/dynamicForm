@@ -1,0 +1,8 @@
+{% block label %}
+    <h3>{{ attribute['label'] }}</h3>
+{% endblock label %}
+{% block content %}
+    {% if attribute['answer'] is defined %}
+        <div class="answer" style="padding-left: 15px;">{{ attribute['answer'] }}</div>
+    {% endif %}
+{% endblock content %}

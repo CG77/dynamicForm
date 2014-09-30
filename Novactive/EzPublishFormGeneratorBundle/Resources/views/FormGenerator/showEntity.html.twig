@@ -1,0 +1,42 @@
+{% extends "NovactiveEzPublishFormGeneratorBundle:FormGenerator:layout.html.twig" %}
+
+{% block content %}
+<div class="nova_ezformgenerator">
+    {% for element in form %}
+        {% set page = element.page %}
+        <fieldset class="page_block" id="container_{{ page.id }}">
+            <legend class="page">
+                <input type="text" class="page_name" id="{{ page.id }}"/>
+                <span id="span-{{ page.id }}">{{ page.dataText }}</span>
+                <a class="page_rename" data-pageid="{{ page.id }}">Renommer</a>
+            </legend>
+            {% if not loop.first %}
+                <a class="delete_page" data-pageid="{{ page.id }}">X</a>
+            {% endif %}
+
+            <div id="attribute_content_{{ page.id }}" class="attribute sortable">
+
+                {% if element.my_attributes is defined %}
+                    {% set my_attributes = element.my_attributes %}
+                    {% for attribute in my_attributes %}
+                        {{ form_widget(attribute.attribute) }}
+                    {% endfor %}
+                {% endif %}
+
+            </div>
+
+            <div class="add-attribute">
+                {% include "NovactiveEzPublishFormGeneratorBundle:FormGenerator:showAttributeList.html.twig" with {
+                "attribute": "attribute",
+                "id" : page.id,
+                "attribute_types": attributes_type
+                } %}
+            </div>
+        </fieldset>
+    {% endfor %}
+</div>
+{% if nbCollections > 0 %}
+    <input type="button" value="Exporter les réponses" id="export_csv" class="button">
+    <input type="hidden" value="{{ contentId }}" id="content_id"/>
+{% endif %}
+{% endblock content %}

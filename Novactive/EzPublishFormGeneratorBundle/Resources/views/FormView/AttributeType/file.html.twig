@@ -1,0 +1,14 @@
+{% extends "NovactiveEzPublishFormGeneratorBundle:FormView/AttributeType:default.html.twig" %}
+
+{% block content %}
+    {% set fileInfo =  attribute['answer'] | nova_ezform_file_info %}
+    {% if fileInfo['path'] is defined and fileInfo['name'] is defined %}
+        <div class="answer" style="padding-left: 15px;">
+            {% if attribute['constraints']['join_as_attachment'] is defined and attribute['constraints']['join_as_attachment'] is not empty  %}
+                {{ fileInfo['name'] }}
+            {% else %}
+                <a href="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset(fileInfo['path']) }}">{{ fileInfo['name'] }}</a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock content %}

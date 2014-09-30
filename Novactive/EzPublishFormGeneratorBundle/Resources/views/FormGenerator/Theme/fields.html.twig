@@ -1,0 +1,177 @@
+{% extends "::form_div_layout.html.twig" %}
+
+{% block form_row %}
+    {% spaceless %}
+        <div>
+            {{ form_label(form) }}
+            {{ form_widget(form) }}
+            {{ form_errors(form) }}
+        </div>
+    {% endspaceless %}
+{% endblock form_row %}
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            <ul class="error">
+                {% for error in errors %}
+                    <li>{{ error.message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
+
+{% block _attribute_text_widget %}
+    {% spaceless %}
+        {% include "NovactiveEzPublishFormGeneratorBundle:FormGenerator/AttributeType:text.html.twig" %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block _attribute_selection_widget %}
+    {% spaceless %}
+        {% include "NovactiveEzPublishFormGeneratorBundle:FormGenerator/AttributeType:selection.html.twig" %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block _attribute_scale_widget %}
+    {% spaceless %}
+        {% include "NovactiveEzPublishFormGeneratorBundle:FormGenerator/AttributeType:scale.html.twig" %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block attribute_selection_widget %}
+    {% spaceless %}
+        {% include "NovactiveEzPublishFormGeneratorBundle:FormGenerator/AttributeType:selection.html.twig" %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block _attribute_email_widget %}
+    {% spaceless %}
+        {% include "NovactiveEzPublishFormGeneratorBundle:FormGenerator/AttributeType:email.html.twig" %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block _attribute_datetime_widget %}
+    {% spaceless %}
+        {% include "NovactiveEzPublishFormGeneratorBundle:FormGenerator/AttributeType:datetime.html.twig" %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block _attribute_integer_widget %}
+    {% spaceless %}
+        {% include "NovactiveEzPublishFormGeneratorBundle:FormGenerator/AttributeType:integer.html.twig" %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block _attribute_textarea_widget %}
+    {% spaceless %}
+        {% include "NovactiveEzPublishFormGeneratorBundle:FormGenerator/AttributeType:textarea.html.twig" %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block _attribute_grid_widget %}
+    {% spaceless %}
+        {% include "NovactiveEzPublishFormGeneratorBundle:FormGenerator/AttributeType:grid.html.twig" %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block _attribute_file_widget %}
+    {% spaceless %}
+        {% include "NovactiveEzPublishFormGeneratorBundle:FormGenerator/AttributeType:file.html.twig" %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block _attribute_hidden_widget %}
+    {% spaceless %}
+        {% include "NovactiveEzPublishFormGeneratorBundle:FormGenerator/AttributeType:hidden.html.twig" %}
+    {% endspaceless %}
+{% endblock %}
+
+
+{% block answer_widget %}
+    {% spaceless %}
+        <div class="clear"></div>
+
+        <div {{ block('widget_attributes') }} style="margin-left: 45px;">
+            {{ form_row(form.libelle) }}
+            {{ form_row(form.value) }}
+            {{ form_row(form.placement) }}
+
+            <div class="subattributes sortable"
+                 data-prototype-text="{{ form_widget(form.subAttributesText.vars.prototype) | e }}"
+                 data-prototype-email="{{ form_widget(form.subAttributesEmail.vars.prototype) | e }}"
+                 data-prototype-integer="{{ form_widget(form.subAttributesInteger.vars.prototype) | e }}"
+                 data-prototype-textarea="{{ form_widget(form.subAttributesTextarea.vars.prototype) | e }}"
+                 data-prototype-datetime="{{ form_widget(form.subAttributesDate.vars.prototype) | e }}"
+                 data-prototype-selection="{{ form_widget(form.subAttributesSelection.vars.prototype) | e }}"
+                 data-prototype-grid="{{ form_widget(form.subAttributesGrid.vars.prototype) | e }}"
+                 style="margin-left: 30px;">
+
+                {% set widgets = form | nova_ezform_sort_subattributes %}
+
+                {% for widget in widgets %}
+                    {{ form_widget(widget) }}
+                {% endfor %}
+            </div>
+
+            <input type="button" value="Supprimer" class="delete_answer"/>
+            <input type="button" value="Ajouter une sous-question" class="show_novsubattribute"/>
+        </div>
+        <div class="clear"></div>
+    {% endspaceless %}
+{% endblock %}
+
+
+{% block grid_definition_widget %}
+    <button class="grid_new_column">Add Column</button>
+    <button class="grid_new_row">Add Row</button>
+
+    {% set countColumn = 0 %}
+    <table width="100%" border="1" cellpadding="0" cellspacing="0" class="novaform_grid"
+           data-prototype-column="{{ form_widget(form.column.vars.prototype) | e }}"
+           data-prototype-row="{{ form_widget(form.row.vars.prototype) | e }}"
+            >
+        <thead class="head">
+        <tr>
+            <th></th>
+            {% for child in form.column %}
+                <th>
+                    {{ form_widget(child) }}
+                </th>
+                {% set countColumn = countColumn + 1 %}
+            {% endfor %}
+        </tr>
+        </thead>
+
+
+        <tbody id="body">
+        {% for child in form.row %}
+            <tr>
+                <td>{{ form_widget(child) }}</td>
+                {% if countColumn > 0 %}
+                    {% for default in child.defaults %}
+                        <td>{{ form_widget(default) }}</td>
+                    {% endfor %}
+                    <td><button class="grid_delete_row">X</button></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block grid_row_widget %}
+    {{ form_widget(form.name, {'attr': {'data-prototype': form_widget(form.defaults.vars.prototype)} }) }}
+{% endblock %}
+
+{% block grid_column_widget %}
+    <button class="grid_delete_column">X</button><br />
+    {{ form_widget(form.name) }}<br />
+    {{ form_widget(form.type) }}
+{% endblock %}
+
+{% block grid_item_widget %}
+    {{ form_widget(form.value) }}
+    {{ form_widget(form.type) }}
+{% endblock %}

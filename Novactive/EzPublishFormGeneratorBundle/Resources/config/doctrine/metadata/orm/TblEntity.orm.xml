@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Entity" table="TBL_entity">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <id name="ezcontentLanguageId" type="integer" column="EZCONTENT_LANGUAGE_id"/>
+    <field name="name" type="string" column="name" length="45" nullable="true"/>
+    <field name="creatorId" type="integer" column="creator_id" nullable="true"/>
+    <field name="created" type="datetime" column="created" nullable="true"/>
+    <field name="modified" type="datetime" column="modified" nullable="true"/>
+    <field name="templateFilePath" type="text" column="template_file_path" nullable="true"/>
+  </entity>
+</doctrine-mapping>

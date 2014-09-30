@@ -1,0 +1,147 @@
+
+.page {
+    background-color: #FFF;
+    border: 1px solid #17687B;
+    padding: 3px;
+    color: #17687B;
+}
+
+.padding-select {
+    padding: 25px 0 13px
+}
+
+.add_page {
+    float: right;
+    font-weight: bold;
+    color: #008000;
+}
+
+.page_name {
+    display: none;
+}
+
+.page_rename {
+    font-style: italic;
+    font-size: 0.8em;
+    padding: 4px;
+    color: #FF8000;
+}
+
+.page_block {
+    margin-bottom: 10px;
+    background-color: #5DBBCF;
+    border: 2px solid #17687B;
+
+}
+
+.delete_page {
+    float: right;
+    text-decoration: none;
+    position: relative;
+    top: -25px;
+    color: #FFF;
+    font-weight: bold;
+    background-color: #F00;
+    padding: 3px;
+
+}
+
+#questions fieldset.parent label {
+    width: 145px;
+    float: left;
+}
+
+fieldset.parent {
+    margin-bottom: 10px;
+    border: 1px solid #17687B;
+}
+
+fieldset.parent div {
+    margin-bottom: 2px;
+
+}
+
+fieldset span {
+    color: #166375;
+    text-shadow: 1px 1px #FFF, -1px 1px #FFF, -1px -1px #FFF, 1px -1px #FFF;
+}
+
+fieldset.parent input[type="radio"] {
+    float: left;
+    margin-top: 0;
+    clear: left;
+}
+
+ul.error {
+    color: #FF0000;
+}
+
+.clear {
+    clear: both;
+    font-size: 0;
+    line-height: 0;
+}
+
+.answer {
+
+    padding: 5px;
+    margin: 15px;
+    border: 1px dashed #17687B;
+    background-color: #A3E3F1;
+}
+
+#ui-datepicker-div {
+    font-size: 12px;
+}
+
+.grouped_filter {
+    display: block;
+    width: auto;
+}
+
+.block_filter {
+    display: block;
+    float: left;
+    margin: 10px 20px 0 0;
+    text-align: center;
+}
+
+.block_filter label {
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.block_filter select {
+    display: block;
+    margin: 0 0 10px;
+}
+
+.delete_attribute , .delete_sub_attribute{
+    margin-left: 10px;
+    color: #F00;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 0.8em;
+}
+
+.show_novsubattribute {
+    font-weight: bold;
+    color: #008000;
+}
+
+.select_list{
+    font-weight: bold;
+    color: #008000;
+}
+
+.delete_answer{
+
+    margin-left: 10px;
+    color: #F00;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.label_illustration{
+    margin-left: 10px;
+}

@@ -1,0 +1,36 @@
+{% set pageCount = entity.pages | length %}
+<form class="uForm" id="dynamic_form" enctype="multipart/form-data" action="{{ app.request.get('semanticPathinfo') }}" method="post" novalidate="" data-max-page="{{ pageCount }}">
+    <div class="pagination paginationTop">
+        <p>
+            {% block pagination_top %}
+            {% endblock %}
+        </p>
+    </div>
+
+
+
+    {#<!-- fieldset niveau 01 -->#}
+    {% block content %}
+    {% endblock content %}
+    {#<!-- /fieldset niveau 01 -->#}
+    {% block javascripts %}
+        {{ form_javascript(form) }}
+    {% endblock %}
+    <div class="formFooter">
+        <div class="pagination">
+            <p>
+                {% block pagination_bottom %}
+                {% endblock pagination_bottom %}
+            </p>
+        </div>
+        <p class="reqNote"><strong>*</strong> Champs obligatoires</p>
+        <div id="formSubmit" class="btnField">
+            <input class="btn btnSubmit" type="submit" id="submitButton" value="Envoyer">
+            {#<input class="btn btnReset" type="reset" value="Effacer">#}
+        </div>
+        {% if not ez_is_field_empty(content,'texte_footer') %}
+            {{ ez_render_field(content,'texte_footer') }}
+        {% endif %}
+        <p class="footNote">{{ ez_render_field(content, 'legal_note') }}</p>
+    </div>
+</form>
